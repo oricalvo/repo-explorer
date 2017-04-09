@@ -16,6 +16,7 @@ enableLogging(true);
 import {initAppStore} from "./appStore";
 import {RepoService} from "./services/repo.service";
 import {HttpModule} from "@angular/http";
+import {RepoDetailsComponent} from "./home/components/repoDetails.component";
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {HttpModule} from "@angular/http";
     declarations: [
         AppComponent,
         ClockComponent,
-        MainComponent
+        MainComponent,
+        RepoDetailsComponent,
     ],
     bootstrap: [AppComponent],
     providers: [

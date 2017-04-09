@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {RepoService} from "../../services/repo.service";
+import {Repo, RepoService} from "../../services/repo.service";
+import {Router} from "@angular/router";
+import {RootService} from "../../services/root.service";
 
 @Component({
   selector: "my-home-main",
@@ -8,7 +10,7 @@ import {RepoService} from "../../services/repo.service";
   styleUrls: ["./main.component.css"]
 })
 export class MainComponent {
-  constructor(private repoService: RepoService) {
+  constructor(private repoService: RepoService, private rootService: RootService, private router: Router) {
   }
 
   get state() {
@@ -17,5 +19,11 @@ export class MainComponent {
 
   ngOnInit() {
     this.repoService.loadAll();
+  }
+
+  select(repo: Repo) {
+    this.router.navigate(["/repo/", repo.name]);
+
+    //this.rootService.gotoRepoDetails(repo);
   }
 }

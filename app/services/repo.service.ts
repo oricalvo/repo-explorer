@@ -9,8 +9,14 @@ export interface Repo {
     name: string;
 }
 
+export interface RepoMetadata {
+    name: string;
+    path: string;
+}
+
 export interface ReposState {
     all: Repo[];
+    current: RepoMetadata;
     loading: boolean;
     error: Error;
 }
@@ -27,6 +33,7 @@ export class RepoService {
         all: null,
         loading: false,
         error: null,
+        current: null,
     });
 
     constructor(private http: Http) {
@@ -103,6 +110,27 @@ export class RepoService {
         });
     }
 
+    @Activity()
+    async loadDetails(repoName: string): Promise<RepoMetadata> {
+        if(this.state.current && this.state.current.name == repoName) {
+            return this.state.current;
+        }
+
+        const repo = this.getRepoByName(repoName);
+
+        const response = await this.http.get(`https://api.github.com/repos/${username}/${repo.name}/contents/repo.explorer.json`, {
+            headers: this.headers,
+        }).map(r=>r.json()).toPromise();
+
+        const metadata: RepoMetadata = JSON.parse(atob(response.content));
+
+        this.store.update({
+            current: metadata,
+        });
+
+        console.log(metadata);
+    }
+
     private getAll(): Observable<Repo> {
         const pages = Observable.create(observer => {
             const first = this.getReposPage(1);
@@ -127,5 +155,18 @@ export class RepoService {
         });
 
         return pages.flatMap(s => s).flatMap(s => s);
+    }
+
+    getRepoByName(name: string) {
+        if(!this.state.all) {
+            throw new Error("Repos were not loaded yet");
+        }
+
+        const repo = this.state.all.find(r => r.name == name);
+        if(!repo) {
+            throw new Error("Repo with name: " + name + " was not found");
+        }
+
+        return repo;
     }
 }
