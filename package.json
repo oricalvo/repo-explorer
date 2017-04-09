@@ -1,0 +1,48 @@
+{
+  "name": "angular2-min-seed",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "bu dev",
+    "prod": "bu prod",
+    "bundle-vendors": "bu bundle-vendors"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/angular/angular.io/blob/master/LICENSE"
+    }
+  ],
+  "dependencies": {
+    "@angular/common": "4.0.1",
+    "@angular/compiler": "4.0.1",
+    "@angular/compiler-cli": "4.0.1",
+    "@angular/core": "4.0.1",
+    "@angular/forms": "^4.0.1",
+    "@angular/http": "4.0.1",
+    "@angular/platform-browser": "4.0.1",
+    "@angular/platform-browser-dynamic": "4.0.1",
+    "@angular/router": "4.0.1",
+    "express": "4.15.2",
+    "express-handlebars": "3.0.0",
+    "moment": "^2.18.1",
+    "reflect-metadata": "0.1.10",
+    "rxjs": "^5.3.0",
+    "t-rex": "^1.0.6",
+    "winston": "^2.3.1",
+    "zone.js": "0.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "7.0.12",
+    "@types/systemjs": "0.20.2",
+    "build-utils": "^1.0.31",
+    "node-sass": "4.5.2",
+    "nopack": "1.1.13",
+    "open": "0.0.5",
+    "shelljs": "0.7.7",
+    "systemjs": "0.20.12",
+    "systemjs-builder": "0.16.4",
+    "tslib": "1.6.0",
+    "typescript": "2.2.2",
+    "webpack": "2.3.3"
+  }
+}

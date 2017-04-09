@@ -1,0 +1,9 @@
+<div *ngIf="state.loading" class="loading">
+    Loading ...
+</div>
+
+<ul>
+    <li *ngFor="let repo of state?.all">
+        <span>{{repo.name}}</span>
+    </li>
+</ul>
