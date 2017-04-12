@@ -48,5 +48,5 @@ export function dump(config: Config) {
     console.log("    env: " + config.env);
     console.log("    version: " + config.version);
     console.log("    httpPort: " + config.httpPort);
-    console.log("    httpsPost: " + config.httpsPort);
+    console.log("    httpsPort: " + config.httpsPort);
 }

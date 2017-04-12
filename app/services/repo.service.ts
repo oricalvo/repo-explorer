@@ -95,7 +95,7 @@ export class RepoService {
 
         transaction(this.store.getAppStore(), async ()=> {
             try {
-                const repos: Repo[] = await this.getAll().toArray().toPromise();
+                const repos: Repo[] = await this.http.get("/api/repo").map(r=>r.json()).toPromise();
 
                 this.store.update({
                     all: repos,

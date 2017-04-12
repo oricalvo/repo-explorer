@@ -5,6 +5,9 @@ import * as configurator from "./config";
 import "tslib";
 import {Config} from "./config";
 import {EnvType} from "./config";
+import {patch} from "express-promise-patch";
+import {registerRepoApi} from "./api/repo";
+import * as logger from "./logger";
 
 let config: Config;
 
@@ -22,12 +25,8 @@ async function init() {
     //
     const viewEngine = createViewEngine(app);
 
+    registerWebApi(app);
     registerStatic(app);
-
-    // if(config.env == EnvType.DEV) {
-    //     nopack.setup(app);
-    // }
-
     registerNotFoundForFileLikeUrls(app);
     registerIndexHtmlForAnyGETRequest(app);
     registerNotAllowed(app);
@@ -41,6 +40,15 @@ async function init() {
             console.log(`Server is listening on ${config.httpsPort}`);
         });
     }
+}
+
+function registerWebApi(app) {
+    const router = express.Router();
+    patch(router);
+
+    app.use("/api", router);
+
+    registerRepoApi(router);
 }
 
 function registerNotFoundForFileLikeUrls(app) {
@@ -105,7 +113,7 @@ function registerStatic(app) {
     });
 
     app.use('/', function (req, res, next) {
-        console.log("STATIC: " + req.url);
+        logger.info("STATIC: " + req.url);
 
         staticEx(req, res, next);
     });

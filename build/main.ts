@@ -16,6 +16,7 @@ import * as logger from "../server/logger";
 cli.command("dev", dev);
 cli.command("prod", prod);
 cli.command("bundle-vendors", bundleVendors);
+cli.command("server", devServer);
 
 cli.run();
 
@@ -30,11 +31,15 @@ export async function dev() {
 
     await bundleVendors();
 
-    logger.info("Running server");
-    spawn("node server/main");
+    devServer();
 
     logger.info("Openning browser");
     open(`http://localhost:${config.httpPort}`);
+}
+
+export function devServer() {
+    logger.info("Running DEV server");
+    spawn("node node_modules/nodemon/bin/nodemon.js server/main.js");
 }
 
 export async function prod() {
